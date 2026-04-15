@@ -1,0 +1,33 @@
+services:
+    db:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=test123
+            - MYSQL_DATABASE=notesdb
+        volumes:
+          - ./data:/var/lib/mysql
+        restart: always
+        ports:
+            - 4406:3306
+    networks:
+        - notesnetwork
+    app:
+        build: .
+        environment:
+            - KEY=jhbjsagasdlkzxmdch892374anmsdad
+            - APP_PORT=3000
+            - DB_HOST=root
+            - DB_PASS=
+            - DB_DATABASE=notes
+        ports:
+            - 3000:3000
+        depends_on:
+            - db
+        networks:
+            - notesnetwork
+networks:
+    mynetwork:
+        driver: bridge
+            
+
+        
